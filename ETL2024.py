@@ -4,9 +4,12 @@ import json
 
 def fill_missing_values(df, columns_to_exclude):
     for column in df.columns:
-        if column not in columns_to_exclude and df[column].isnull().any():
-            most_frequent_value = df[column].mode()[0]
-            df[column].fillna(most_frequent_value, inplace=True)
+        if column not in columns_to_exclude:
+            if df[column].isnull().any():
+                most_frequent_value = df[column].mode()[0]
+                df[column].fillna(most_frequent_value, inplace=True)
+        else:
+            df[column].fillna('N/A', inplace=True)
     return df
 
 def process_csv(input_file, output_file, columns_to_exclude):
